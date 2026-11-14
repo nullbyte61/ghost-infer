@@ -1132,6 +1132,10 @@ mod tests {
         assert!(end.contains("finished after") && end.contains("exit code 3"), "{end}");
     }
 
+    // Uses a PowerShell range pipeline (1..20000 | ForEach-Object {...}); the
+    // sh fallback on Unix would need a different fixture. Phase 5 of the Linux
+    // port scopes shell() but leaves the Windows-authored test alone.
+    #[cfg(windows)]
     #[test]
     fn new_output_shows_after_the_kept_tail_is_full() {
         let dir = std::env::temp_dir();
